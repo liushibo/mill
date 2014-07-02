@@ -347,6 +347,36 @@ public class DuplicationTaskProcessor extends TaskProcessorBase {
         }
     }
 
+		try {
+			new Retrier().execute(new Retriable() {
+				@Override
+				public String retry() throws Exception {
+					// Set properties
+					try {
+						destStore.setContentProperties(spaceId, contentId,
+								sourceProperties);
+					} catch (StorageStateException ex) {
+						log.warn(MessageFormat
+								.format("Unable to set content properties on destination store ({0}) for {1} (content) in {2} (space)",
+										destStore, contentId, spaceId));
+					}
+
+					return "success";
+
+				}
+			});
+
+			log.info("Successfully duplicated properties for " + contentId
+					+ " in space " + spaceId + " in account "
+					+ dupTask.getAccount());
+
+		} catch (Exception e) {
+			String msg = "Error attempting to duplicate content properties: "
+					+ e.getMessage();
+			throw new DuplicationTaskExecutionFailedException(
+					buildFailureMessage(msg), e);
+		}
+	}
     /**
      * Pull out the system-generated properties, to allow the properties that
      * are added to the duplicated item to be only the user-defined properties.
