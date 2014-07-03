@@ -59,6 +59,7 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 
 /**
  * @author Daniel Bernstein
@@ -66,6 +67,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ComponentScan(basePackages = {"org.duracloud.mill", "org.duracloud.account.db.config"})
 @Configuration
+@ImportResource("classpath:/jpa-config.xml")
 public class AppConfig {
 
     private static Logger log = LoggerFactory.getLogger(AppConfig.class);
