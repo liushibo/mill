@@ -361,22 +361,22 @@ public class DuplicationTaskProcessor extends TaskProcessorBase {
 										destStore, contentId, spaceId));
 					}
 
-					return "success";
+                    return "success";
 
-				}
-			});
+                }
+            });
 
-			log.info("Successfully duplicated properties for " + contentId
-					+ " in space " + spaceId + " in account "
-					+ dupTask.getAccount());
+            log.info("Successfully duplicated properties for " + contentId
+                    + " in space " + spaceId + " in account "
+                    + dupTask.getAccount());
 
-		} catch (Exception e) {
-			String msg = "Error attempting to duplicate content properties: "
-					+ e.getMessage();
-			throw new DuplicationTaskExecutionFailedException(
-					buildFailureMessage(msg), e);
-		}
-	}
+        } catch (Exception e) {
+            String msg = "Error attempting to duplicate content properties: "
+                    + e.getMessage();
+            throw new DuplicationTaskExecutionFailedException(
+                    buildFailureMessage(msg), e);
+        }
+    }
     /**
      * Pull out the system-generated properties, to allow the properties that
      * are added to the duplicated item to be only the user-defined properties.
