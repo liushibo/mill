@@ -67,7 +67,6 @@ import org.springframework.context.annotation.ImportResource;
  */
 @ComponentScan(basePackages = {"org.duracloud.mill", "org.duracloud.account.db.config"})
 @Configuration
-@ImportResource("classpath:/jpa-config.xml")
 public class AppConfig {
 
     private static Logger log = LoggerFactory.getLogger(AppConfig.class);
