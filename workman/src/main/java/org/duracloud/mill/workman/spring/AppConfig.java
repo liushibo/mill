@@ -10,6 +10,7 @@ package org.duracloud.mill.workman.spring;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import org.duracloud.account.db.repo.DuracloudAccountRepo;
 import org.duracloud.common.queue.TaskQueue;
@@ -60,6 +61,8 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
 /**
  * @author Daniel Bernstein
@@ -70,6 +73,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppConfig {
 
     private static Logger log = LoggerFactory.getLogger(AppConfig.class);
+    private Connection rabbitMqConnection = null;
 
     @Bean
     public PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
@@ -236,7 +240,12 @@ public class AppConfig {
         for (String taskQueueName : taskQueuesNames) {
             TaskQueue taskQueue;
             if(queueType == "RABBITMQ"){
-                taskQueue = new RabbitMQTaskQueue(queueConfig[0], queueConfig[1], queueConfig[2], queueConfig[3], taskQueueName.trim());
+                Connection mqConn = getRabbitMQConnection(queueConfig[0], queueConfig[2], queueConfig[3]);
+                if(mqConn != null) {
+                    taskQueue = new RabbitMQTaskQueue(mqConn, queueConfig[1], taskQueueName.trim());
+                }else{
+                    break;
+                }
             }else {
                 taskQueue = new SQSTaskQueue(taskQueueName.trim());
             }
@@ -252,11 +261,37 @@ public class AppConfig {
         String[] queueConfig = configurationManager.getRabbitMQConfig();
         TaskQueue taskQueue;
         if(queueType == "RABBITMQ"){
-            taskQueue = new RabbitMQTaskQueue(queueConfig[0], queueConfig[1], queueConfig[2], queueConfig[3], queueName.trim());
+            Connection mqConn = getRabbitMQConnection(queueConfig[0], queueConfig[2], queueConfig[3]);
+            if(mqConn != null) {
+                taskQueue = new RabbitMQTaskQueue(mqConn, queueConfig[1], queueName.trim());
+            }else{
+                return null;
+            }
         }else {
             taskQueue = new SQSTaskQueue(queueName);
         }
         return taskQueue;
+    }
+
+    protected Connection getRabbitMQConnection (String host, String username, String password){
+        if(rabbitMqConnection == null){
+            try {
+                ConnectionFactory factory = new ConnectionFactory();
+                factory.setUsername(username);
+                factory.setPassword(password);
+                factory.setVirtualHost("/");
+                factory.setHost(host);
+                factory.setPort(5672);
+                Connection conn = factory.newConnection();
+                rabbitMqConnection = conn;
+                return conn;
+            }catch (Exception e){
+                log.error("Not able to establish connection with RabbitMQ");
+                return null;
+            }
+        }else{
+            return rabbitMqConnection;
+        }
     }
 
     @Bean

@@ -41,12 +41,13 @@ public class ConfigurationManager {
      */
     public String getQueueType() {
         String type = System.getProperty(ConfigConstants.QUEUE_TYPE);
+        System.out.println(type);
         if(type.equalsIgnoreCase("aws")){
             return "AWS";
         }else if(type.equalsIgnoreCase("rabbitmq")){
             return "RABBITMQ";
         }else{
-            return "Unknown";
+            return "RABBITMQ";
         }
     }
 
