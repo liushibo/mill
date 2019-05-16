@@ -40,14 +40,13 @@ public class ConfigurationManager {
      * @return
      */
     public String getQueueType() {
-        String type = System.getProperty(ConfigConstants.QUEUE_TYPE);
-        System.out.println(type);
-        if(type.equalsIgnoreCase("aws")){
+        String queueType = System.getProperty(ConfigConstants.QUEUE_TYPE).trim();
+        if(queueType.equalsIgnoreCase("aws")){
             return "AWS";
-        }else if(type.equalsIgnoreCase("rabbitmq")){
+        }else if(queueType.equalsIgnoreCase("rabbitmq")){
             return "RABBITMQ";
         }else{
-            return "RABBITMQ";
+            return "Unknown";
         }
     }
 
