@@ -236,12 +236,18 @@ public class AppConfig {
         List<String> taskQueuesNames = configurationManager.getTaskQueueNames();
         List<TaskQueue> taskQueues = new LinkedList<>();
         String queueType = configurationManager.getQueueType();
-        String[] queueConfig = configurationManager.getRabbitMQConfig();
+        boolean isRabbitMQ = queueType.trim().equalsIgnoreCase("RABBITMQ");
+        String[] queueConfig = null;
+        Connection mqConn = null;
+
+        if(isRabbitMQ){
+            queueConfig = configurationManager.getRabbitMQConfig();
+            mqConn = getRabbitMQConnection(queueConfig[0], queueConfig[2], queueConfig[3]);
+        }
 
         for (String taskQueueName : taskQueuesNames) {
             TaskQueue taskQueue;
-            if(queueType == "RABBITMQ"){
-                Connection mqConn = getRabbitMQConnection(queueConfig[0], queueConfig[2], queueConfig[3]);
+            if(isRabbitMQ){
                 if(mqConn != null) {
                     taskQueue = new RabbitMQTaskQueue(mqConn, queueConfig[1], taskQueueName.trim());
                 }else{
@@ -259,9 +265,9 @@ public class AppConfig {
     }
 
     protected TaskQueue createTaskQueue (String queueType, TaskProducerConfigurationManager configurationManager, String queueName) {
-        String[] queueConfig = configurationManager.getRabbitMQConfig();
         TaskQueue taskQueue;
-        if(queueType == "RABBITMQ"){
+        if(queueType.trim().equalsIgnoreCase("RABBITMQ")){
+            String[] queueConfig = configurationManager.getRabbitMQConfig();
             Connection mqConn = getRabbitMQConnection(queueConfig[0], queueConfig[2], queueConfig[3]);
             if(mqConn != null) {
                 taskQueue = new RabbitMQTaskQueue(mqConn, queueConfig[1], queueName.trim());
