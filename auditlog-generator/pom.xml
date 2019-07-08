@@ -3,9 +3,9 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.duracloud.mill</groupId>
-  <artifactId>workman</artifactId>
+  <artifactId>auditlog-generator</artifactId>
   <version>3.1.0</version>
-  <name>DuraCloud Mill Workman</name>
+  <name>DuraCloud Mill Audit Log Generator</name>
 
   <parent>
     <artifactId>mill</artifactId>
@@ -16,7 +16,7 @@
 
   <properties>
     <!-- see maven-shade-plugin in root pom.xml -->
-    <mainClass>org.duracloud.mill.workman.spring.AppDriver</mainClass>
+    <mainClass>org.duracloud.mill.audit.generator.AuditLogGeneratorDriver</mainClass>
   </properties>
 
   <build>
@@ -38,44 +38,13 @@
 
     <dependency>
       <groupId>org.duracloud.mill</groupId>
-      <artifactId>common-bit</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
-      <artifactId>common-dup</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
-      <artifactId>common-taskproducer</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
       <artifactId>common-storageprovider</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
-      <artifactId>credentialsrepo-impl</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
       <groupId>org.duracloud.db</groupId>
       <artifactId>mill-db-repo</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
-      <artifactId>bitlog</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -110,23 +79,13 @@
 
     <dependency>
       <groupId>org.duracloud</groupId>
-      <artifactId>common-json</artifactId>
+      <artifactId>storeclient</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.duracloud</groupId>
-      <artifactId>common-queue</artifactId>
-      <version>6.5.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud</groupId>
-      <artifactId>reportdata</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud</groupId>
-      <artifactId>auditor</artifactId>
+      <artifactId>synctool</artifactId>
+      <version>${duracloud.version}</version>
     </dependency>
 
     <dependency>
@@ -141,16 +100,6 @@
     </dependency>
 
     <dependency>
-      <groupId>org.duracloud</groupId>
-      <artifactId>s3storageprovider</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud</groupId>
-      <artifactId>glacierstorageprovider</artifactId>
-    </dependency>
-
-    <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
     </dependency>
@@ -158,17 +107,6 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpcore</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk-cloudwatch</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.rabbitmq</groupId>
-      <artifactId>amqp-client</artifactId>
-      <version>5.7.0</version>
     </dependency>
 
   </dependencies>

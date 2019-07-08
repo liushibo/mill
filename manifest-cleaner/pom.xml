@@ -3,9 +3,9 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.duracloud.mill</groupId>
-  <artifactId>taskproducertool</artifactId>
+  <artifactId>manifest-cleaner</artifactId>
   <version>3.1.0</version>
-  <name>DuraCloud Mill Task Producer Command Line Tool</name>
+  <name>DuraCloud Mill Manifest Cleaner</name>
 
   <parent>
     <artifactId>mill</artifactId>
@@ -16,7 +16,7 @@
 
   <properties>
     <!-- see maven-shade-plugin in root pom.xml -->
-    <mainClass>org.duracloud.mill.taskproducertool.Driver</mainClass>
+    <mainClass>org.duracloud.mill.manifest.cleaner.ManifestCleanerDriver</mainClass>
   </properties>
 
   <build>
@@ -37,20 +37,23 @@
     </dependency>
 
     <dependency>
-      <groupId>org.duracloud.mill</groupId>
-      <artifactId>common-bit</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
-      <artifactId>common-storageprovider</artifactId>
-      <version>${project.version}</version>
+      <groupId>org.duracloud.db</groupId>
+      <artifactId>mill-db-repo</artifactId>
     </dependency>
 
     <dependency>
       <groupId>org.duracloud</groupId>
-      <artifactId>auditor</artifactId>
+      <artifactId>common-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
     </dependency>
 
     <dependency>
@@ -66,16 +69,6 @@
     <dependency>
       <groupId>org.duracloud</groupId>
       <artifactId>common</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore</artifactId>
     </dependency>
 
   </dependencies>

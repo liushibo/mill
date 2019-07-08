@@ -3,9 +3,9 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.duracloud.mill</groupId>
-  <artifactId>workman</artifactId>
+  <artifactId>loopingduptaskproducer</artifactId>
   <version>3.1.0</version>
-  <name>DuraCloud Mill Workman</name>
+  <name>DuraCloud Mill Looping Duplication Task Producer</name>
 
   <parent>
     <artifactId>mill</artifactId>
@@ -16,7 +16,7 @@
 
   <properties>
     <!-- see maven-shade-plugin in root pom.xml -->
-    <mainClass>org.duracloud.mill.workman.spring.AppDriver</mainClass>
+    <mainClass>org.duracloud.mill.ltp.dup.AppDriver</mainClass>
   </properties>
 
   <build>
@@ -38,26 +38,7 @@
 
     <dependency>
       <groupId>org.duracloud.mill</groupId>
-      <artifactId>common-bit</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
-      <artifactId>common-dup</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
       <artifactId>common-taskproducer</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud.mill</groupId>
-      <artifactId>common-storageprovider</artifactId>
       <version>${project.version}</version>
     </dependency>
 
@@ -68,29 +49,26 @@
     </dependency>
 
     <dependency>
-      <groupId>org.duracloud.db</groupId>
-      <artifactId>mill-db-repo</artifactId>
+      <groupId>org.duracloud.mill</groupId>
+      <artifactId>common-bit</artifactId>
+      <version>${project.version}</version>
     </dependency>
-
     <dependency>
       <groupId>org.duracloud.mill</groupId>
-      <artifactId>bitlog</artifactId>
+      <artifactId>common-dup</artifactId>
       <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.duracloud</groupId>
-      <artifactId>common-test</artifactId>
-      <scope>test</scope>
+      <groupId>org.duracloud.mill</groupId>
+      <artifactId>loopingtaskproducer</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-context</artifactId>
+      <groupId>org.duracloud.mill</groupId>
+      <artifactId>common-storageprovider</artifactId>
+      <version>${project.version}</version>
     </dependency>
 
     <dependency>
@@ -110,34 +88,7 @@
 
     <dependency>
       <groupId>org.duracloud</groupId>
-      <artifactId>common-json</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud</groupId>
-      <artifactId>common-queue</artifactId>
-      <version>6.5.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud</groupId>
-      <artifactId>reportdata</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud</groupId>
-      <artifactId>auditor</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.duracloud</groupId>
       <artifactId>storageprovider</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-jms</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
 
     <dependency>
@@ -151,26 +102,18 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpclient</artifactId>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.httpcomponents</groupId>
-      <artifactId>httpcore</artifactId>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>com.amazonaws</groupId>
-      <artifactId>aws-java-sdk-cloudwatch</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>com.rabbitmq</groupId>
-      <artifactId>amqp-client</artifactId>
-      <version>5.7.0</version>
-    </dependency>
-
   </dependencies>
 
 </project>

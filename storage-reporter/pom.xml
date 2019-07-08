@@ -3,9 +3,9 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.duracloud.mill</groupId>
-  <artifactId>common-taskproducer</artifactId>
+  <artifactId>storage-reporter</artifactId>
   <version>3.1.0</version>
-  <name>DuraCloud Mill Common Task Producer</name>
+  <name>DuraCloud Mill Storage Reporter</name>
 
   <parent>
     <artifactId>mill</artifactId>
@@ -14,10 +14,20 @@
     <relativePath>../pom.xml</relativePath>
   </parent>
 
+  <properties>
+    <!-- see maven-shade-plugin in root pom.xml -->
+    <mainClass>org.duracloud.mill.storagereporter.AppDriver</mainClass>
+  </properties>
+
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+      </plugin>
     </plugins>
   </build>
+
   <dependencies>
 
     <dependency>
@@ -26,10 +36,19 @@
       <version>${project.version}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.duracloud.db</groupId>
+      <artifactId>mill-db-repo</artifactId>
+    </dependency>
 
     <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
+      <groupId>org.duracloud.db</groupId>
+      <artifactId>account-management-db-repo</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
     </dependency>
 
   </dependencies>
