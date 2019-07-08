@@ -10,10 +10,6 @@ package org.duracloud.mill.workman.spring;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.ws.rs.NotSupportedException;
-
-import javassist.NotFoundException;
-import net.sf.ehcache.search.expression.Not;
 import org.duracloud.mill.common.taskproducer.TaskProducerConfigurationManager;
 import org.duracloud.mill.config.ConfigConstants;
 import org.slf4j.Logger;
@@ -45,7 +41,6 @@ public class WorkmanConfigurationManager extends TaskProducerConfigurationManage
 
         return queueNames;
     }
-
 
     /**
      * @return

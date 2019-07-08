@@ -73,7 +73,6 @@ public class PropertyDefinitionListBuilder {
         return this;
     }
 
-
     public PropertyDefinitionListBuilder addAuditQueue() {
         add(ConfigConstants.QUEUE_NAME_AUDIT, true);
         return this;

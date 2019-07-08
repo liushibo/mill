@@ -7,9 +7,6 @@
  */
 package org.duracloud.mill.config;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -34,18 +31,16 @@ public class ConfigurationManager {
         return getCommaSeparatedListToArray(ConfigConstants.NOTIFICATION_RECIPIENTS);
     }
 
-
-
     /**
      * @return
      */
     public String getQueueType() {
         String queueType = System.getProperty(ConfigConstants.QUEUE_TYPE).trim();
-        if(queueType.equalsIgnoreCase("aws")){
+        if ( queueType.equalsIgnoreCase("aws") ) {
             return "AWS";
-        }else if(queueType.equalsIgnoreCase("rabbitmq")){
+        } else if ( queueType.equalsIgnoreCase("rabbitmq") ) {
             return "RABBITMQ";
-        }else{
+        } else {
             return "Unknown";
         }
     }
@@ -53,9 +48,9 @@ public class ConfigurationManager {
     /**
      * @return
      */
-    public String[] getRabbitMQConfig()  {
+    public String[] getRabbitMQConfig() {
 
-        if(getQueueType() == "RABBITMQ"){
+        if ( getQueueType() == "RABBITMQ" ) {
             String[] config = new String[] {
                 System.getProperty(ConfigConstants.RABBITMQ_HOST),
                 System.getProperty(ConfigConstants.RABBITMQ_EXCHANGE),
@@ -63,15 +58,14 @@ public class ConfigurationManager {
                 System.getProperty(ConfigConstants.RABBITMQ_PASSWORD)
             };
             return config;
-        }else{
+        } else {
             return new String[0];
         }
     }
 
-
     private String[] getCommaSeparatedListToArray(String prop) {
         String values = System.getProperty(prop);
-        if (StringUtils.isBlank(values)) {
+        if (StringUtils.isBlank(values) ) {
             return new String[0];
         } else {
             return values.split(",");

@@ -10,8 +10,9 @@ package org.duracloud.mill.workman.spring;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 import org.duracloud.account.db.repo.DuracloudAccountRepo;
 import org.duracloud.common.queue.TaskQueue;
 import org.duracloud.common.queue.aws.SQSTaskQueue;
@@ -61,9 +62,6 @@ import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
 
 /**
  * @author Daniel Bernstein
@@ -240,20 +238,20 @@ public class AppConfig {
         String[] queueConfig = null;
         Connection mqConn = null;
 
-        if(isRabbitMQ){
+        if (isRabbitMQ) {
             queueConfig = configurationManager.getRabbitMQConfig();
             mqConn = getRabbitMQConnection(queueConfig[0], queueConfig[2], queueConfig[3]);
         }
 
         for (String taskQueueName : taskQueuesNames) {
             TaskQueue taskQueue;
-            if(isRabbitMQ){
-                if(mqConn != null) {
+            if (isRabbitMQ) {
+                if (mqConn != null) {
                     taskQueue = new RabbitMQTaskQueue(mqConn, queueConfig[1], taskQueueName.trim());
-                }else{
+                } else {
                     break;
                 }
-            }else {
+            } else {
                 taskQueue = new SQSTaskQueue(taskQueueName.trim());
             }
             taskQueues.add(taskQueue);
@@ -266,22 +264,22 @@ public class AppConfig {
 
     protected TaskQueue createTaskQueue (String queueType, TaskProducerConfigurationManager configurationManager, String queueName) {
         TaskQueue taskQueue;
-        if(queueType.trim().equalsIgnoreCase("RABBITMQ")){
+        if ( queueType.trim().equalsIgnoreCase("RABBITMQ") ) {
             String[] queueConfig = configurationManager.getRabbitMQConfig();
             Connection mqConn = getRabbitMQConnection(queueConfig[0], queueConfig[2], queueConfig[3]);
-            if(mqConn != null) {
+            if (mqConn != null) {
                 taskQueue = new RabbitMQTaskQueue(mqConn, queueConfig[1], queueName.trim());
-            }else{
+            } else {
                 return null;
             }
-        }else {
+        } else {
             taskQueue = new SQSTaskQueue(queueName);
         }
         return taskQueue;
     }
 
-    protected Connection getRabbitMQConnection (String host, String username, String password){
-        if(rabbitMqConnection == null){
+    protected Connection getRabbitMQConnection (String host, String username, String password) {
+        if ( rabbitMqConnection == null ) {
             try {
                 ConnectionFactory factory = new ConnectionFactory();
                 factory.setUsername(username);
@@ -292,11 +290,11 @@ public class AppConfig {
                 Connection conn = factory.newConnection();
                 rabbitMqConnection = conn;
                 return conn;
-            }catch (Exception e){
+            } catch (Exception e) {
                 log.error("Not able to establish connection with RabbitMQ");
                 return null;
             }
-        }else{
+        } else {
             return rabbitMqConnection;
         }
     }
@@ -353,11 +351,11 @@ public class AppConfig {
         DuplicationPolicyRepo policyRepo;
         String policyDir = configurationManager.getDuplicationPolicyDir();
 
-        if (policyDir != null) {
+        if ( policyDir != null ) {
             policyRepo = new LocalDuplicationPolicyRepo(policyDir);
         } else {
             String suffix = configurationManager.getPolicyBucketSuffix();
-            if (suffix != null) {
+            if ( suffix != null ) {
                 policyRepo = new S3DuplicationPolicyRepo(suffix);
             } else {
                 policyRepo = new S3DuplicationPolicyRepo();

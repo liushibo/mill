@@ -116,7 +116,6 @@
     <dependency>
       <groupId>org.duracloud</groupId>
       <artifactId>common-queue</artifactId>
-      <version>6.5.0</version>
     </dependency>
 
     <dependency>
