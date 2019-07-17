@@ -70,7 +70,7 @@ public class StorageProviderFactory {
                                               credentials.getOptions());
         } else if (storageProviderType.equals(StorageProviderType.CHRONOPOLIS)) {
             return new ChronopolisStorageProvider(credentials.getAccessKey(),
-                                                  credentials.getSecretKey());
+                                                  credentials.getSecretKey(), null);
         }
         throw new RuntimeException(storageProviderType
                                    + " is not a supported storage provider type");
